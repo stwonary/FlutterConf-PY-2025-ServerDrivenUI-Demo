@@ -1,0 +1,17 @@
+{
+  "name": "Guest User",
+  "favorite_color": "gray",
+  "email": null,
+  "purchase_history": [],
+  "cart_items": [],
+  "recommended_products": [
+    { "product_id": "P100", "product_name": "Sample Product 1", "price": 19.99 },
+    { "product_id": "P101", "product_name": "Sample Product 2", "price": 29.99 }
+  ],
+  "machine_learning_data": {
+    "predicted_next_purchase_days": null,
+    "churn_risk_score": null,
+    "customer_lifetime_value": 0,
+    "preferred_categories": []
+  }
+}
