@@ -1,12 +1,18 @@
 {
   "name": "Ruben",
   "favorite_color": "green",
+  "favorite_color_code": "#00FF00",
   "email": "ruben@example.com",
   "purchase_history": [
     {
       "order_id": "ORD-2001",
       "items": [
-        { "product_id": "P020", "product_name": "Graphic Tablet", "quantity": 1, "price": 89.99 }
+        {
+          "product_id": "P020",
+          "product_name": "Graphic Tablet",
+          "quantity": 1,
+          "price": 89.99
+        }
       ],
       "order_date": "2024-04-22",
       "order_total": 89.99
@@ -14,8 +20,18 @@
     {
       "order_id": "ORD-2002",
       "items": [
-        { "product_id": "P021", "product_name": "Drawing Stylus", "quantity": 1, "price": 15.99 },
-        { "product_id": "P022", "product_name": "Art Software License", "quantity": 1, "price": 49.99 }
+        {
+          "product_id": "P021",
+          "product_name": "Drawing Stylus",
+          "quantity": 1,
+          "price": 15.99
+        },
+        {
+          "product_id": "P022",
+          "product_name": "Art Software License",
+          "quantity": 1,
+          "price": 49.99
+        }
       ],
       "order_date": "2024-05-10",
       "order_total": 65.98
@@ -30,13 +46,24 @@
     }
   ],
   "recommended_products": [
-    { "product_id": "P023", "product_name": "Digital Art Tutorial", "price": 19.99 },
-    { "product_id": "P024", "product_name": "Premium Brush Set", "price": 12.99 }
+    {
+      "product_id": "P023",
+      "product_name": "Digital Art Tutorial",
+      "price": 19.99
+    },
+    {
+      "product_id": "P024",
+      "product_name": "Premium Brush Set",
+      "price": 12.99
+    }
   ],
   "machine_learning_data": {
     "predicted_next_purchase_days": 15,
     "churn_risk_score": 0.4,
     "customer_lifetime_value": 900,
-    "preferred_categories": ["art supplies", "software"]
+    "preferred_categories": [
+      "art supplies",
+      "software"
+    ]
   }
 }
