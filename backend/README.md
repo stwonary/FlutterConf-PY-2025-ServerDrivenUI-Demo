@@ -100,7 +100,7 @@ To stop and remove it:
 
 - Flutter dependency: mirai, ...
 - Fetch the JSON screen from the /screen/{screen_name}/{user_id} endpoint.
-- Parse with Mirai.fromNetwork(...) and render in your Flutter widget tree.
+- Parse with Mirai.fromNetwork(...) or Mirai.fromJson(..), and render in your Flutter widget tree.
 
 ## License
 

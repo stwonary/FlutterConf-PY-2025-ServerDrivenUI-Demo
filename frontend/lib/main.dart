@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/home_screen/home_screen.dart';
 import 'package:mirai/mirai.dart';
 
 void main() async {
@@ -50,9 +51,9 @@ class _MyHomePageState extends State<MyHomePage>
       body: TabBarView(
         controller: _tabController,
         children: const [
-          _UserPage(name: 'simon'),
-          _UserPage(name: 'ruben'),
-          _UserPage(name: 'guest'),
+          HomeScreen(username: 'simon'),
+          HomeScreen(username: 'ruben'),
+          HomeScreen(username: 'guest'),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -73,22 +74,6 @@ class _MyHomePageState extends State<MyHomePage>
           ),
         ],
       ),
-    );
-  }
-}
-
-class _UserPage extends StatelessWidget {
-  const _UserPage({required this.name});
-
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return Mirai.fromNetwork(
-      request: MiraiNetworkRequest(
-        url: 'http://10.0.2.2:8000/screen/home_screen/$name',
-      ),
-      context: context,
     );
   }
 }
