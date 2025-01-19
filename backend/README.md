@@ -5,8 +5,10 @@ This project demonstrates a simple backend for a server-driven UI approach using
 - **FastAPI** for the web framework and automatic Swagger/OpenAPI docs  
 - **Jinja2** for JSON templating  
 - **JSON files** for user data  
+- **JavaScript** to show inapp messages   
 
 The backend returns JSON screens (`home_screen` and `offer_list_screen`) that can be interpreted by a Flutter app using the `json_dynamic_widget` package.
+There is also a javascript file that is downloaded by the Flutter app and interpreted using ... in order to generate inapp messages.
 
 ---
 
@@ -23,6 +25,7 @@ backend/
 │  ├─ home_screen.json.j2
 │  └─ offer_list_screen.json.j2
 ├─ requirements.txt
+├─ script.js
 └─ README.md
 ```
 
@@ -38,7 +41,11 @@ Returns user data from a JSON file (simon.json, ruben.json, or guest.json).
 
     GET /screen/{screen_name}/{user_id}
 
-Renders a Jinja2 template (.json.j2) with user data, returning JSON that can be used by the Flutter json_dynamic_widget package.
+Renders a Jinja2 template (.json.j2) with user data, returning JSON that can be used by the Flutter mirai package.
+
+### Script Endpoint
+
+    GET /script
 
 ### Swagger/OpenAPI Documentation
 
@@ -85,11 +92,15 @@ To stop and remove it:
 
 (Example screens: home_screen, offer_list_screen)
 
+### Get the inapp messaging script
+
+    GET /script
+
 ## Flutter Integration
 
-- Flutter dependency: json_dynamic_widget
+- Flutter dependency: mirai, ...
 - Fetch the JSON screen from the /screen/{screen_name}/{user_id} endpoint.
-- Parse with JsonWidgetData.fromDynamic(screenJson) and render in your Flutter widget tree.
+- Parse with Mirai.fromNetwork(...) and render in your Flutter widget tree.
 
 ## License
 

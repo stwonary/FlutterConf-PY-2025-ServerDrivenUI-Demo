@@ -4,6 +4,7 @@ import os
 from fastapi import FastAPI, HTTPException, Path
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 from jinja2 import Environment, FileSystemLoader
 
 app = FastAPI(
@@ -84,3 +85,7 @@ def get_screen(
         raise HTTPException(status_code=500, detail="Error parsing rendered template")
 
     return screen_json
+
+@app.get("/script", response_class=FileResponse)
+async def get_script():
+    return "script.js"
