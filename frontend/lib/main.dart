@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/home_screen/home_screen.dart';
+import 'package:frontend/inapp_message/in_app_banner.dart';
+import 'package:frontend/inapp_message/in_app_message_cubit.dart';
+import 'package:frontend/inapp_message/in_app_message_listener.dart';
 import 'package:mirai/mirai.dart';
 
 void main() async {
   await Mirai.initialize();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -20,21 +25,26 @@ class MyApp extends StatelessWidget {
           dynamicSchemeVariant: DynamicSchemeVariant.content,
         ),
       ),
-      home: const MyHomePage(title: 'Server Driven UI Demo'),
+      home: BlocProvider<InAppMessageCubit>(
+        create: (context) => InAppMessageCubit(),
+        child: const InAppMessagingListener(
+          child: HomePage(title: 'Server Driven UI Demo'),
+        ),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
+class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 3, vsync: this);
 
@@ -48,17 +58,29 @@ class _MyHomePageState extends State<MyHomePage>
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          HomeScreen(username: 'simon'),
-          HomeScreen(username: 'ruben'),
-          HomeScreen(username: 'guest'),
+      body: Column(
+        children: [
+          const InAppBanner(tag: 'home'),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                HomeScreen(username: 'simon'),
+                HomeScreen(username: 'ruben'),
+                HomeScreen(username: 'guest'),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabController.index,
-        onTap: (index) => setState(() => _tabController.index = index),
+        onTap: (index) {
+          setState(() => _tabController.index = index);
+          context.read<InAppMessageCubit>().runJs(event: {
+            'index': index,
+          });
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

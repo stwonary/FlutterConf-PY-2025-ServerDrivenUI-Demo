@@ -17,7 +17,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeLoading());
     try {
       final response = await http
-          .get(Uri.parse('http://10.0.2.2:8000/screen/home_screen/$username'));
+          .get(Uri.parse('http://localhost:8000/screen/home_screen/$username'));
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         emit(HomeLoaded(json));
