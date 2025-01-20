@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException, Path
-from fastapi.responses import JSONResponse
-from fastapi.openapi.utils import get_openapi
 import json
 import os
+
+from fastapi import FastAPI, HTTPException, Path
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 from jinja2 import Environment, FileSystemLoader
 
 app = FastAPI(
@@ -14,6 +16,7 @@ app = FastAPI(
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data')
 SCREENS_FOLDER = os.path.join(os.path.dirname(__file__), 'screens')
 env = Environment(loader=FileSystemLoader(SCREENS_FOLDER))
+
 
 # -- Override the openapi schema to set version to 3.1.0 --
 def custom_openapi():
@@ -30,19 +33,16 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
+
 app.openapi = custom_openapi
+
 
 @app.get("/users/{user_id}", response_class=JSONResponse, tags=["Users"])
 def get_user(
-    user_id: str = Path(
-        ...,
-        description="User ID. Example values: simon, ruben, guest.",
-        examples={
-            "Simon": {"summary": "Simon user", "value": "simon"},
-            "Ruben": {"summary": "Ruben user", "value": "ruben"},
-            "Guest": {"summary": "Guest user", "value": "guest"}
-        }
-    )
+        user_id: str = Path(
+            ...,
+            description="User ID. Example values: simon, ruben, guest.",
+        )
 ):
     json_path = os.path.join(DATA_FOLDER, f"{user_id}.json")
     if not os.path.isfile(json_path):
@@ -52,25 +52,17 @@ def get_user(
         user_data = json.load(f)
     return user_data
 
+
 @app.get("/screen/{screen_name}/{user_id}", response_class=JSONResponse, tags=["Screens"])
 def get_screen(
-    screen_name: str = Path(
-        ...,
-        description="Name of the screen template. Example values: home_screen, offer_list_screen.",
-        example={
-            "HomeScreen": {"summary": "Home Screen", "value": "home_screen"},
-            "OfferListScreen": {"summary": "Offer List Screen", "value": "offer_list_screen"}
-        }
-    ),
-    user_id: str = Path(
-        ...,
-        description="User ID. Example values: simon, ruben, guest.",
-        example={
-            "Simon": {"summary": "Simon user", "value": "simon"},
-            "Ruben": {"summary": "Ruben user", "value": "ruben"},
-            "Guest": {"summary": "Guest user", "value": "guest"}
-        }
-    )
+        screen_name: str = Path(
+            ...,
+            description="Name of the screen template. Example values: home_screen, offer_list_screen.",
+        ),
+        user_id: str = Path(
+            ...,
+            description="User ID. Example values: simon, ruben, guest.",
+        )
 ):
     json_path = os.path.join(DATA_FOLDER, f"{user_id}.json")
     if not os.path.isfile(json_path):
@@ -93,3 +85,7 @@ def get_screen(
         raise HTTPException(status_code=500, detail="Error parsing rendered template")
 
     return screen_json
+
+@app.get("/script", response_class=FileResponse)
+async def get_script():
+    return "script.js"

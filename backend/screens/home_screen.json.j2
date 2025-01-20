@@ -1,26 +1,50 @@
 {
-  "type": "column",
-  "children": [
-    {
-      "type": "container",
-      "child": {
-        "type": "text",
-        "args": {
-          "text": "Welcome to the Home Screen, {{ name }}!"
+  "type": "padding",
+  "padding": {
+    "left": 20,
+    "top": 20,
+    "right": 20,
+    "bottom": 20
+  },
+  "child": {
+    "type": "center",
+    "child": {
+      "type": "column",
+      "children": [
+        {
+          "type": "container",
+          "child": {
+            "type": "text",
+            "data": "Welcome to the Home Screen, {{ name }}!",
+            "style": {
+              "fontSize": 22,
+              "fontWeight": "w500",
+              "height": 1.5
+            }
+          }
+        },
+        {
+          "type": "container",
+          "decoration": {
+            "color": "{{ favorite_color_code }}"
+          },
+          "padding": {
+            "left": 20,
+            "top": 20,
+            "right": 20,
+            "bottom": 20
+          },
+          "child": {
+            "type": "text",
+            "data": "Your favorite color is: {{ favorite_color }}",
+            "style": {
+              "fontSize": 16,
+              "fontWeight": "w500",
+              "height": 1.5
+            }
+          }
         }
-      }
-    },
-    {
-      "type": "container",
-      "decoration": {
-        "color": "{{ favorite_color }}"
-      },
-      "child": {
-        "type": "text",
-        "args": {
-          "text": "Your role is: {{ role }}"
-        }
-      }
+      ]
     }
-  ]
+  }
 }
